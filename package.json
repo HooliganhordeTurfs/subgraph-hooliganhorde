@@ -1,0 +1,27 @@
+{
+  "name": "subgraph-hooliganhorde",
+  "license": "MIT License",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "test": "graph test",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ hooliganhorde",
+    "create-local": "graph create --node http://graph.node.hooligan.money:8020/ hooliganhorde",
+    "remove-local": "graph remove --node http://graph.node.hooligan.money:8020/ hooliganhorde",
+    "deploy-local": "graph deploy --node http://graph.node.hooligan.money:8020/ --ipfs http://graph.node.hooligan.money:5001 hooliganhorde",
+    "create-local-dev": "graph create --node http://graph.node.hooligan.money:8020/ hooliganhorde-dev",
+    "remove-local-dev": "graph remove --node http://graph.node.hooligan.money:8020/ hooliganhorde-dev",
+    "deploy-local-dev": "graph deploy --node http://graph.node.hooligan.money:8020/ --ipfs http://graph.node.hooligan.money:5001 hooliganhorde-dev",
+    "create-local-test": "graph create --node http://graph.node.hooligan.money:8020/ hooliganhorde-testing",
+    "remove-local-test": "graph remove --node http://graph.node.hooligan.money:8020/ hooliganhorde-testing",
+    "deploy-local-test": "graph deploy --node http://graph.node.hooligan.money:8020/ --ipfs http://graph.node.hooligan.money:5001 hooliganhorde-testing",
+    "deploy-hosted": "graph deploy --product hosted-service cujowolf/hooliganhorde",
+    "deploy-hosted-dev": "graph deploy --product hosted-service cujowolf/hooliganhorde-dev"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.30.4",
+    "@graphprotocol/graph-ts": "^0.27.0",
+    "matchstick-as": "^0.5.0"
+  },
+  "private": true
+}

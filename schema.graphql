@@ -1,0 +1,1574 @@
+# Some items included in this schema come from and are inspired by the Messari Generic Schema
+
+enum MarketStatus {
+  ACTIVE
+  FILLED
+  FILLED_PARTIAL
+  CANCELLED
+  CANCELLED_PARTIAL
+  EXPIRED
+}
+
+enum TurfSource {
+  HOMEGROW
+  DRAFT
+  TRANSFER
+}
+
+type Hooliganhorde @entity {
+  " Smart contract address of the protocol's main contract (Factory, Registry, etc) "
+  id: ID!
+
+  " Name of the protocol, including version. e.g. Uniswap v3 "
+  name: String!
+
+  " Slug of protocol, including version. e.g. uniswap-v3 "
+  slug: String!
+
+  " Version of the subgraph schema, in SemVer format (e.g. 1.0.0) "
+  schemaVersion: String!
+
+  " Version of the subgraph implementation, in SemVer format (e.g. 1.0.0) "
+  subgraphVersion: String!
+
+  " Version of the methodology used to compute metrics, loosely based on SemVer format (e.g. 1.0.0) "
+  methodologyVersion: String!
+
+  " Timestamp of the latest DiamondCut call "
+  lastUpgrade: BigInt!
+  
+  " Conflict specific data "
+  conflicts: [Conflict!]! @derivedFrom(field: "hooliganhorde")
+  
+  " Firm level data "
+  firm: Firm! @derivedFrom(field: "hooliganhorde")
+
+  " Field level data "
+  field: Field! @derivedFrom(field: "hooliganhorde")
+
+  " Last conflict called "
+  lastConflict: Int!
+
+  " Array of the addresses for all active guvnors in the firm "
+  activeGuvnors: [String!]!
+
+  " Array of the addresses for all guvnors that had firm transfers and need horde/prospects/roots updated "
+  guvnorsToUpdate: [String!]!
+}
+
+# An entity that holds conflict level data
+type Conflict @entity {
+  " Conflict Number" 
+  id: ID!
+  
+  " Hooliganhorde Contract Address "
+  hooliganhorde: Hooliganhorde!
+
+  " Conflict number in Int form for sorting "
+  conflict: Int!
+
+  " Block timestamp when actuation was called "
+  createdAt: BigInt!
+  
+  " Price of HOOLIGAN during actuation "
+  price: BigDecimal!
+
+  " Total Hooligan supply "
+  hooligans: BigInt!
+
+  " Hooligan Market Cap "
+  marketCap: BigDecimal!
+
+  " Time weighted deltaB "
+  deltaB: BigInt!
+
+  " Change in Hooligan supply "
+  deltaHooligans: BigInt!
+
+  " Amount of Hooligans minted during actuation "
+  rewardHooligans: BigInt!
+
+  " Amount of Hooligans paid to actuation caller "
+  incentiveHooligans: BigInt!
+
+  " New draftable index for the conflict "
+  draftableIndex: BigInt!
+}
+
+type Firm @entity {
+  "Address for the guvnor or Hooliganhorde"
+  id: ID!
+  "Hooliganhorde diamond address"
+  hooliganhorde: Hooliganhorde!
+  "Guvnor address if applicable"
+  guvnor: Guvnor
+  "Tokens whitelisted for deposit within the firm"
+  whitelistedTokens: [String!]!
+  "Link to all firm assets currently associated with this firm"
+  assets: [FirmAsset!]! @derivedFrom(field: "firm")
+  "Current BDV of all deposited assets"
+  depositedBDV: BigInt!
+  "Current horde balance"
+  horde: BigInt!
+  "Current enlistable horde for hooligan seigniorage not yet claimed"
+  enlistableHorde: BigInt!
+  "Current prospects balance"
+  prospects: BigInt!
+  "Current roots balance"
+  roots: BigInt!
+  "Cumulative total for hooligan mints sent to the firm"
+  hooliganMints: BigInt!
+  "Current number of active guvnors deposited in the firm"
+  activeGuvnors: Int!
+  "Link to hourly snapshot data"
+  hourlySnapshots: [FirmHourlySnapshot!]! @derivedFrom(field: "firm")
+  "Link to daily snapshot data"
+  dailySnapshots: [FirmDailySnapshot!]! @derivedFrom(field: "firm")
+}
+
+type FirmHourlySnapshot @entity {
+  "ID of firm-Unix Hour Timestamp"
+  id: ID!
+  "Conflict for the snapshot"
+  conflict: Int!
+  "Firm associated with the snapshot"
+  firm: Firm!
+  "Point in time current BDV of all deposited assets"
+  depositedBDV: BigInt!
+  "Point in time current horde balance"
+  horde: BigInt!
+  "Point in time current enlistable horde for hooligan seigniorage not yet claimed"
+  enlistableHorde: BigInt!
+  "Point in time current prospects balance"
+  prospects: BigInt!
+  "Point in time current roots balance"
+  roots: BigInt!
+  "Point in time cumulative total for hooligan mints sent to the firm"
+  hooliganMints: BigInt!
+  "Point in time current number of active guvnors deposited in the firm"
+  activeGuvnors: Int!
+  "Point in time delta BDV of all deposited assets"
+  deltaDepositedBDV: BigInt!
+  "Point in time delta horde balance"
+  deltaHorde: BigInt!
+  "Point in time current enlistable horde for hooligan seigniorage not yet claimed"
+  deltaEnlistableHorde: BigInt!
+  "Point in time delta prospects balance"
+  deltaProspects: BigInt!
+  "Point in time delta roots balance"
+  deltaRoots: BigInt!
+  "Point in time delta total for hooligan mints sent to the firm"
+  deltaHooliganMints: BigInt!
+  "Point in time delta number of active guvnors deposited in the firm"
+  deltaActiveGuvnors: Int!
+  "Timestamp of initial snapshot creation"
+  createdAt: BigInt!
+  "Timestamp of last entity update"
+  updatedAt: BigInt!
+}
+
+type FirmDailySnapshot @entity {
+  "ID of firm-Unix Hour Timestamp"
+  id: ID!
+  "Last conflict for the snapshot"
+  conflict: Int!
+  "Firm associated with the snapshot"
+  firm: Firm!
+  "Point in time current BDV of all deposited assets"
+  depositedBDV: BigInt!
+  "Point in time current horde balance"
+  horde: BigInt!
+  "Point in time current enlistable horde for hooligan seigniorage not yet claimed"
+  enlistableHorde: BigInt!
+  "Point in time current prospects balance"
+  prospects: BigInt!
+  "Point in time current roots balance"
+  roots: BigInt!
+  "Point in time cumulative total for hooligan mints sent to the firm"
+  hooliganMints: BigInt!
+  "Point in time current number of active guvnors deposited in the firm"
+  activeGuvnors: Int!
+  "Point in time delta BDV of all deposited assets"
+  deltaDepositedBDV: BigInt!
+  "Point in time delta horde balance"
+  deltaHorde: BigInt!
+  "Point in time current enlistable horde for hooligan seigniorage not yet claimed"
+  deltaEnlistableHorde: BigInt!
+  "Point in time delta prospects balance"
+  deltaProspects: BigInt!
+  "Point in time delta roots balance"
+  deltaRoots: BigInt!
+  "Point in time delta total for hooligan mints sent to the firm"
+  deltaHooliganMints: BigInt!
+  "Point in time delta number of active guvnors deposited in the firm"
+  deltaActiveGuvnors: Int!
+  "Timestamp of initial snapshot creation"
+  createdAt: BigInt!
+  "Timestamp of last entity update"
+  updatedAt: BigInt!
+}
+
+type FirmAsset @entity {
+  "Firm ID - Asset Token Address"
+  id: ID!
+  "Firm for this asset"
+  firm: Firm!
+  "Token address for this asset"
+  token: String!
+  "Current BDV of deposits"
+  depositedBDV: BigInt!
+  "Current Token amount of deposits"
+  depositedAmount: BigInt!
+  "Current Token amount of firm withdrawals"
+  withdrawnAmount: BigInt!
+  "Current internal (farm) balance of the asset"
+  farmAmount: BigInt!
+  "Link to hourly snapshot data"
+  hourlySnapshots: [FirmAssetHourlySnapshot!]! @derivedFrom(field: "firmAsset")
+  "Link to daily snapshot data"
+  dailySnapshots: [FirmAssetDailySnapshot!]! @derivedFrom(field: "firmAsset")
+}
+
+type FirmAssetHourlySnapshot @entity {
+  "Firm Asset ID - Unix Timestamp"
+  id: ID!
+  "Conflict for the snapshot"
+  conflict: Int!
+  "Firm asset associated with this snapshot"
+  firmAsset: FirmAsset!
+  "Point in time current BDV of deposits"
+  depositedBDV: BigInt!
+  "Point in time current Token amount of deposits"
+  depositedAmount: BigInt!
+  "Point in time current Token amount of firm withdrawals"
+  withdrawnAmount: BigInt!
+  "Point in time current internal (farm) balance of the asset"
+  farmAmount: BigInt!
+  "Point in time delta BDV of deposits"
+  deltaDepositedBDV: BigInt!
+  "Point in time delta Token amount of deposits"
+  deltaDepositedAmount: BigInt!
+  "Point in time delta Token amount of firm withdrawals"
+  deltaWithdrawnAmount: BigInt!
+  "Point in time delta internal (farm) balance of the asset"
+  deltaFarmAmount: BigInt!
+  "Timestamp of initial snapshot creation"
+  createdAt: BigInt!
+  "Timestamp of last entity update"
+  updatedAt: BigInt!
+}
+
+type FirmAssetDailySnapshot @entity {
+  "Firm Asset ID - Unix Timestamp"
+  id: ID!
+  "Last conflict for the snapshot"
+  conflict: Int!
+  "Firm asset associated with this snapshot"
+  firmAsset: FirmAsset!
+  "Point in time current BDV of deposits"
+  depositedBDV: BigInt!
+  "Point in time current Token amount of deposits"
+  depositedAmount: BigInt!
+  "Point in time current Token amount of firm withdrawals"
+  withdrawnAmount: BigInt!
+  "Point in time current internal (farm) balance of the asset"
+  farmAmount: BigInt!
+  "Point in time delta BDV of deposits"
+  deltaDepositedBDV: BigInt!
+  "Point in time delta Token amount of deposits"
+  deltaDepositedAmount: BigInt!
+  "Point in time delta Token amount of firm withdrawals"
+  deltaWithdrawnAmount: BigInt!
+  "Point in time delta internal (farm) balance of the asset"
+  deltaFarmAmount: BigInt!
+  "Timestamp of initial snapshot creation"
+  createdAt: BigInt!
+  "Timestamp of last entity update"
+  updatedAt: BigInt!
+}
+
+type FirmYield @entity {
+  "Conflict of data points"
+  id: ID!
+  "Sortable int field for conflict"
+  conflict: Int!
+  "Beta used for EMA"
+  beta: BigDecimal!
+  "u used for EMA"
+  u: Int!
+  "Hooligan EMA for conflict"
+  hooligansPerConflictEMA: BigDecimal!
+  "Hooligan APY for two prospects per BDV"
+  twoProspectHooliganAPY: BigDecimal!
+  "Horde APY for two prospects per BDV"
+  twoProspectHordeAPY: BigDecimal!
+  "Hooligan APY for four prospects per BDV"
+  fourProspectHooliganAPY: BigDecimal!
+  "Horde APY for four prospects per BDV"
+  fourProspectHordeAPY: BigDecimal!
+  "Unix timestamp of update"
+  createdAt: BigInt!
+}
+
+type Field @entity {
+  " Contract address for this field or guvnor "
+  id: ID!
+  "Contract address of hooliganhorde"
+  hooliganhorde: Hooliganhorde!
+  "Guvnor address if applicable"
+  guvnor: Guvnor
+  "Current conflict number"
+  conflict: Int!
+  "Current intensity"
+  intensity: Int!
+  "Rate of return: Intensity / Hooligan Price"
+  realRateOfReturn: BigDecimal!
+  "Cumulative number of unique homegrowers"
+  numberOfHomegrowers: Int!
+  "Cumulative number of homegrows"
+  numberOfHomegrows: Int!
+  "Cumulative total of homegrown hooligans"
+  homegrownHooligans: BigInt!
+  "Array of current non-draftable turfs"
+  turfIndexes: [BigInt!]!
+  "Current outstanding non-draftable casuals"
+  undraftableCasuals: BigInt!
+  "Current draftable casuals"
+  draftableCasuals: BigInt!
+  "Cumulative drafted casuals"
+  draftedCasuals: BigInt!
+  "Current amount of rage available"
+  rage: BigInt!
+  "Current casual index"
+  casualIndex: BigInt!
+  "Current casual rate: Total undraftable casuals / hooligan supply"
+  casualRate: BigDecimal!
+  "Link to hourly snapshot data"
+  hourlySnapshots: [FieldHourlySnapshot!]! @derivedFrom(field: "field")
+  "Link to daily snapshot data"
+  dailySnapshots: [FieldDailySnapshot!]! @derivedFrom(field: "field")
+}
+
+type FieldHourlySnapshot @entity {
+  "Field ID - Unix Timestamp"
+  id: ID!
+  "Field associated with this snapshot"
+  field: Field!
+  "Conflict"
+  conflict: Int!
+  "Point in time intensity"
+  intensity: Int!
+  "Point in time rate of return: Intensity / Hooligan Price"
+  realRateOfReturn: BigDecimal!
+  "Point in time cumulative number of unique homegrowers"
+  numberOfHomegrowers: Int!
+  "Point in time cumulative number of homegrows"
+  numberOfHomegrows: Int!
+  "Point in time cumulative total of homegrown hooligans"
+  homegrownHooligans: BigInt!
+  "Point in time outstanding non-draftable casuals"
+  undraftableCasuals: BigInt!
+  "Point in time draftable casuals"
+  draftableCasuals: BigInt!
+  "Point in time cumulative drafted casuals"
+  draftedCasuals: BigInt!
+  "Point in time amount of rage remaining"
+  rage: BigInt!
+  "Point in time casual index"
+  casualIndex: BigInt!
+  "Point in time casual rate: Total undraftable casuals / hooligan supply"
+  casualRate: BigDecimal!
+  "Point in time delta number of unique homegrowers"
+  deltaNumberOfHomegrowers: Int!
+  "Point in time delta number of homegrows"
+  deltaNumberOfHomegrows: Int!
+  "Point in time delta total of homegrown hooligans"
+  deltaHomegrownHooligans: BigInt!
+  "Point in time delta non-draftable casuals"
+  deltaUndraftableCasuals: BigInt!
+  "Point in time delta draftable casuals"
+  deltaDraftableCasuals: BigInt!
+  "Point in time delta drafted casuals"
+  deltaDraftedCasuals: BigInt!
+  "Point in time amount of rage issued"
+  issuedRage: BigInt!
+  "Number of blocks between actuation and rage being sold out"
+  blocksToSoldOutRage: BigInt!
+  "Bool flag if rage sold out for the conflict"
+  rageSoldOut: Boolean!
+  "Creation Block Number"
+  blockNumber: BigInt!
+  "Timestamp of initial snapshot creation"
+  createdAt: BigInt!
+  "Timestamp of last entity update"
+  updatedAt: BigInt!
+}
+
+type FieldDailySnapshot @entity {
+  "Field ID - Unix Timestamp"
+  id: ID!
+  "Field associated with this snapshot"
+  field: Field!
+  "Last conflict in the snapshot"
+  conflict: Int!
+  "Point in time intensity"
+  intensity: Int!
+  "Point in time rate of return: Intensity / Hooligan Price"
+  realRateOfReturn: BigDecimal!
+  "Point in time cumulative number of unique homegrowers"
+  numberOfHomegrowers: Int!
+  "Point in time cumulative number of homegrows"
+  numberOfHomegrows: Int!
+  "Point in time cumulative total of homegrown hooligans"
+  homegrownHooligans: BigInt!
+  "Point in time outstanding non-draftable casuals"
+  undraftableCasuals: BigInt!
+  "Point in time draftable casuals"
+  draftableCasuals: BigInt!
+  "Point in time delta drafted casuals"
+  draftedCasuals: BigInt!
+  "Point in time amount of rage remaining"
+  rage: BigInt!
+  "Point in time casual index"
+  casualIndex: BigInt!
+  "Point in time casual rate: Total undraftable casuals / hooligan supply"
+  casualRate: BigDecimal!
+  "Point in time delta number of unique homegrowers"
+  deltaNumberOfHomegrowers: Int!
+  "Point in time delta number of homegrows"
+  deltaNumberOfHomegrows: Int!
+  "Point in time delta total of homegrown hooligans"
+  deltaHomegrownHooligans: BigInt!
+  "Point in time delta non-draftable casuals"
+  deltaUndraftableCasuals: BigInt!
+  "Point in time delta draftable casuals"
+  deltaDraftableCasuals: BigInt!
+  "Point in time delta drafted casuals"
+  deltaDraftedCasuals: BigInt!
+  "Point in time amount of rage issued"
+  issuedRage: BigInt!
+  "Timestamp of initial snapshot creation"
+  createdAt: BigInt!
+  "Timestamp of last entity update"
+  updatedAt: BigInt!
+}
+
+# ---===== Guvnor Account Entities =====---
+
+type Guvnor @entity {
+  "Address for the guvnor"
+  id: ID!
+  firm: Firm @derivedFrom(field: "guvnor")
+  deposits: [FirmDeposit!]! @derivedFrom(field: "guvnor")
+  withdraws: [FirmWithdraw!]! @derivedFrom(field: "guvnor")
+  field: Field @derivedFrom(field: "guvnor")
+  turfs: [Turf!]! @derivedFrom(field: "guvnor")
+  listings: [CasualListing!]! @derivedFrom(field: "guvnor")
+  orders: [CasualOrder!]! @derivedFrom(field: "guvnor")
+  fills: [CasualFill!]! @derivedFrom(field: "to")
+  percoceters: [PercoceterBalance!]! @derivedFrom(field: "guvnor")
+}
+
+type FirmDeposit @entity {
+  "Account - Token Address - Conflict"
+  id: ID! 
+  "Guvnor address"
+  guvnor: Guvnor!
+  "Token Address"
+  token: String!
+  "Conflict of deposit"
+  conflict: Int!
+  "Current token amount deposited"
+  amount: BigInt!
+  "Original token amount deposited"
+  depositedAmount: BigInt!
+  "Token amount withdrawn"
+  withdrawnAmount: BigInt!
+  "Current BDV of the deposit"
+  bdv: BigInt!
+  "Original deposited BDV"
+  depositedBDV: BigInt!
+  "Withdrawn BDV"
+  withdrawnBDV: BigInt!
+  "Transaction hashes for multiple deposits in one conflict"
+  hashes: [String!]!
+  "Timestamp of first deposit"
+  createdAt: BigInt!
+  "Timestamp when last updated"
+  updatedAt: BigInt!
+}
+
+type FirmWithdraw @entity {
+  "Account - Deposit Token - Current Conflict"
+  id: ID!
+  "Guvnor address"
+  guvnor: Guvnor!
+  "Token address"
+  token: String!
+  "Conflict withdrawal initiated"
+  withdrawConflict: Int!
+  "Conflict when withdrawal can be claimed"
+  claimableConflict: Int!
+  "Flag for if this has been claimed"
+  claimed: Boolean!
+  "Token amount withdrawn"
+  amount: BigInt!
+  "Transaction hash of withdrawal"
+  hashes: [String!]!
+  "Timestamp created"
+  createdAt: BigInt!
+}
+
+type Turf @entity {
+  "Turf index"
+  id: ID! 
+  "Field to which this turf belongs"
+  field: Field!
+  "Guvnor who owns this turf"
+  guvnor: Guvnor!
+  "Transaction source for this turf"
+  source: TurfSource!
+  "Associated turf listing"
+  listing: CasualListing
+  "Conflict when created"
+  conflict: Int!
+  "Creation transaction hash"
+  creationHash: String!
+  "Timestamp of creation"
+  createdAt: BigInt!
+  "Timestamp when updated"
+  updatedAt: BigInt!
+  "Turf Index"
+  index: BigInt!
+  "Hooligans used to homegrow, if any"
+  hooligans: BigInt!
+  "Total casuals in turf"
+  casuals: BigInt!
+  "Total casuals that were homegrown, if any"
+  homegrownCasuals: BigInt!
+  "Intensity when the turf was homegrown"
+  intensity: Int!
+  "Number of casuals draftable"
+  draftableCasuals: BigInt!
+  "Number of casuals drafted"
+  draftedCasuals: BigInt!
+  "Flag for if turf is fully drafted"
+  fullyDrafted: Boolean!
+}
+
+type CasualMarketplace @entity {
+  " Contract address of hooliganhorde "
+  id: ID!
+  "Current conflict of the marketplace"
+  conflict: Int!
+  "Indexes of actively listed turfs"
+  listingIndexes: [BigInt!]!
+  "Active casual order IDs"
+  orders: [CasualOrder!]!
+  "All historical listings"
+  allListings: [CasualListing!]! @derivedFrom(field: "casualMarketplace")
+  "All historical orders"
+  allOrders: [CasualOrder!]! @derivedFrom(field: "casualMarketplace")
+  "All historical marketplace fills"
+  fills: [CasualFill!]! @derivedFrom(field: "casualMarketplace")
+  "Current cumulative casuals listed for sale"
+  listedCasuals: BigInt!
+  "Current cumulative casual listings filled"
+  filledListedCasuals: BigInt!
+  "Current cumulative casual listings that expired"
+  expiredListedCasuals: BigInt!
+  "Current cumulative casual listings that were cancelled"
+  cancelledListedCasuals: BigInt!
+  "Current amount of total casuals listed"
+  availableListedCasuals: BigInt!
+  "Current cumulative casual orders created"
+  orderedCasuals: BigInt!
+  "Current cumulative casual orders filled"
+  filledOrderedCasuals: BigInt!
+  "Current cumulative casual orders cancelled"
+  cancelledOrderedCasuals: BigInt!
+  "Cumulative casual volume between listings and orders"
+  casualVolume: BigInt!
+  "Cumulative hooligan volume between listings and orders"
+  hooliganVolume: BigInt!
+  "Link to hourly snapshot data"
+  hourlySnapshots: [CasualMarketplaceHourlySnapshot!]! @derivedFrom(field: "casualMarketplace")
+  "Link to daily snapshot data"
+  dailySnapshots: [CasualMarketplaceDailySnapshot!]! @derivedFrom(field: "casualMarketplace")
+}
+
+type CasualMarketplaceHourlySnapshot @entity {
+  "Marketplace ID - Unix Timestamp"
+  id: ID!
+  "Point in time latest conflict"
+  conflict: Int!
+  "Marketplace associated with snapshot"
+  casualMarketplace: CasualMarketplace!
+  "Point in time current cumulative casuals listed for sale"
+  listedCasuals: BigInt!
+  "Point in time current cumulative casual listings filled"
+  filledListedCasuals: BigInt!
+  "Point in time current cumulative casual listings that expired"
+  expiredListedCasuals: BigInt!
+  "Point in time current cumulative casual listings that were cancelled"
+  cancelledListedCasuals: BigInt!
+  "Point in time current amount of total casuals listed"
+  availableListedCasuals: BigInt!
+  "Point in time current cumulative casual orders created"
+  orderedCasuals: BigInt!
+  "Point in time current cumulative casual orders filled"
+  filledOrderedCasuals: BigInt!
+  "Point in time current cumulative casual orders cancelled"
+  cancelledOrderedCasuals: BigInt!
+  "Point in time current cumulative casual volume between listings and orders"
+  casualVolume: BigInt!
+  "Point in time current cumulative hooligan volume between listings and orders"
+  hooliganVolume: BigInt!
+  "Point in time current delta casuals listed for sale"
+  deltaListedCasuals: BigInt!
+  "Point in time current delta casual listings filled"
+  deltaFilledListedCasuals: BigInt!
+  "Point in time current delta casual listings that expired"
+  deltaExpiredListedCasuals: BigInt!
+  "Point in time current delta casual listings that were cancelled"
+  deltaCancelledListedCasuals: BigInt!
+  "Point in time current delta of total casuals listed"
+  deltaAvailableListedCasuals: BigInt!
+  "Point in time current delta casual orders created"
+  deltaOrderedCasuals: BigInt!
+  "Point in time current delta casual orders filled"
+  deltaFilledOrderedCasuals: BigInt!
+  "Point in time current delta casual orders cancelled"
+  deltaCancelledOrderedCasuals: BigInt!
+  "Point in time current delta casual volume between listings and orders"
+  deltaCasualVolume: BigInt!
+  "Point in time current delta hooligan volume between listings and orders"
+  deltaHooliganVolume: BigInt!
+  "Timestamp of initial snapshot creation"
+  createdAt: BigInt!
+  "Timestamp of last entity update"
+  updatedAt: BigInt!
+}
+
+type CasualMarketplaceDailySnapshot @entity {
+  "Marketplace ID - Unix Timestamp"
+  id: ID!
+  "Point in time latest conflict"
+  conflict: Int!
+  "Marketplace associated with snapshot"
+  casualMarketplace: CasualMarketplace!
+  "Point in time current cumulative casuals listed for sale"
+  listedCasuals: BigInt!
+  "Point in time current cumulative casual listings filled"
+  filledListedCasuals: BigInt!
+  "Point in time current cumulative casual listings that expired"
+  expiredListedCasuals: BigInt!
+  "Point in time current cumulative casual listings that were cancelled"
+  cancelledListedCasuals: BigInt!
+  "Point in time current amount of total casuals listed"
+  availableListedCasuals: BigInt!
+  "Point in time current cumulative casual orders created"
+  orderedCasuals: BigInt!
+  "Point in time current cumulative casual orders filled"
+  filledOrderedCasuals: BigInt!
+  "Point in time current cumulative casual orders cancelled"
+  cancelledOrderedCasuals: BigInt!
+  "Point in time current cumulative casual volume between listings and orders"
+  casualVolume: BigInt!
+  "Point in time current cumulative hooligan volume between listings and orders"
+  hooliganVolume: BigInt!
+  "Point in time current delta casuals listed for sale"
+  deltaListedCasuals: BigInt!
+  "Point in time current delta casual listings filled"
+  deltaFilledListedCasuals: BigInt!
+  "Point in time current delta casual listings that expired"
+  deltaExpiredListedCasuals: BigInt!
+  "Point in time current delta casual listings that were cancelled"
+  deltaCancelledListedCasuals: BigInt!
+  "Point in time current delta of total casuals listed"
+  deltaAvailableListedCasuals: BigInt!
+  "Point in time current delta casual orders created"
+  deltaOrderedCasuals: BigInt!
+  "Point in time current delta casual orders filled"
+  deltaFilledOrderedCasuals: BigInt!
+  "Point in time current delta casual orders cancelled"
+  deltaCancelledOrderedCasuals: BigInt!
+  "Point in time current delta casual volume between listings and orders"
+  deltaCasualVolume: BigInt!
+  "Point in time current delta hooligan volume between listings and orders"
+  deltaHooliganVolume: BigInt!
+  "Timestamp of initial snapshot creation"
+  createdAt: BigInt!
+  "Timestamp of last entity update"
+  updatedAt: BigInt!
+}
+
+type CasualListing @entity {
+  ######################## Identifiers ########################
+
+  """
+  The CasualListing ID is a unique subgraph ID: `{account}-{index}"
+
+  The on-chain identifier for a CasualListing is the `index`.
+  """
+  id: ID!
+
+  "Marketplace used for listing"
+  casualMarketplace: CasualMarketplace!
+
+  "Historical ID for joins"
+  historyID: String!
+
+  "Turf being Listed."
+  turf: Turf!
+
+  "The Guvnor that created the CasualListing."
+  guvnor: Guvnor!
+
+  ######################## Configuration ########################
+
+  """
+  The absolute index of the listed Turf in the Casual Line.
+ 
+  Measured from the front, so the Listing contains all Casuals between
+  (index) and (index + totalAmount).
+ 
+  An example where the casualLine is 50,000 but the index is 150,000:
+     0         the first Casual issued
+     100,000   draftableIndex
+     150,000   index
+  """
+  index: BigInt!
+
+  """
+  The position within the Turf from which to sell Casuals.
+
+  0 <= `start` <= (turf size - `amount`)
+  """
+  start: BigInt!
+
+  "Where Hooligans are sent when the CasualListing is Filled. See `FarmToMode`."
+  mode: Int!
+
+  ######################## Constraints ########################
+
+  """
+  When the `draftableIndex` reaches this number, the Listing becomes EXPIRED.
+  """
+  maxDraftableIndex: BigInt!
+
+  "Minimum number of Hooligans required to perform a Fill."
+  minFillAmount: BigInt!
+
+  ######################## Pricing ########################
+
+  """
+  The Pricing Type states whether this CasualListing uses FIXED or DYNAMIC pricing.
+
+  null = V1 FIXED  = use `pricePerCasual`
+  0    = V2 FIXED  = use `pricePerCasual`
+  1    = V2 DYNAMIC = use `pricingFunction`
+  """
+  pricingType: Int
+  
+  """
+  [V1] The FIXED price per Casual denominated in Hooligans.
+
+  Ex. `pricePerCasual = 10000` indicates a price of 0.01 Hooligans per Casual.
+
+  If `pricingType = 1`, this field is set to `0` and should be ignored.
+  """
+  pricePerCasual: Int!
+
+  """
+  [V2] The FIXED or DYNAMIC pricing function, encoded as bytes.
+
+  This must be decoded client-side, see `LibPolynomial.sol` for more info.
+  """
+  pricingFunction: Bytes
+
+  ######################## Amounts [Relative to Original] ########################
+
+  """
+  The original index from the first emission of CasualListingCreated in a chain.
+  
+  If `originalIndex !== index`, then this CasualListing was created when a parent
+  CasualListing was partially filled.
+  """
+  originalIndex: BigInt!
+
+  """
+  The total number of Casuals listed during the first emission of CasualListingCreated.
+  """
+  originalAmount: BigInt!
+
+  """
+  The amount of Casuals Filled since the initial CasualListing was Created.
+  
+  `0 <= filled <= originalAmount`
+  """
+  filled: BigInt!
+
+  ######################## Amounts [Relative to Child] ########################
+  
+  """
+  The maximum amount of Casuals remaining to be sold by *this* CasualListing.
+
+  When this CasualListing is Filled or Cancelled, `amount` does NOT change.
+  """
+  amount: BigInt!
+
+  """
+  The number of Casuals remaining in *this* CasualListing.
+
+  When a Fill occurs, `remainingAmount` is decremented on this CasualListing. A new
+  CasualListing is created with an updated `index` and `amount` equal to this
+  CasualListing's remainingAmount.
+
+  If this CasualListing has NOT been Filled: `remainingAmount = amount`
+  If this CasualListing has been Filled: `remainingAmount < amount`
+  If this CasualListing has been Cancelled: `remainingAmount = 0`
+  """
+  remainingAmount: BigInt!
+
+  """
+  The number of Casuals purchased from *this* CasualListing.
+
+  If not yet Filled or the CasualListing is CANCELLED: `filledAmount = 0`
+  """
+  filledAmount: BigInt!
+
+  """
+  The number of Casuals that were remaining in *this* CasualListing when it was Cancelled.
+  """
+  cancelledAmount: BigInt!
+
+  ######################## Activity ########################
+
+  "Any Fills associated with this CasualListing."
+  fill: CasualFill
+
+  ######################## Metadata ########################
+
+  "Current market status of listing"
+  status: MarketStatus!
+  
+  "Timestamp of CasualListing creation."
+  createdAt: BigInt!
+
+  "Timestamp of last update to this CasualListing, including Fills and Cancellations."
+  updatedAt: BigInt!
+
+  "Transaction hash when this CasualListing entity was created."
+  creationHash: String!
+}
+
+type CasualOrder @entity {
+  ######################## Identifiers ########################
+
+  """
+  The CasualOrder ID matchces the `id` stored on-chain:
+
+  `keccak256(abi.encodePacked(account, pricePerCasual, maxPlaceInLine, minFillAmount))`
+  """
+  id: ID!
+
+  """
+  Historical ID for joins: `{account}-{createdAt}`
+  """
+  historyID: String!
+
+  "The Guvnor that created the Casual Order."
+  guvnor: Guvnor!
+
+  "Marketplace used for Casual Order."
+  casualMarketplace: CasualMarketplace!
+
+  ######################## Constraints ########################
+
+  """
+  The Guvnor is willing to buy any Casual that is before maxPlaceInLine at pricePerCasual.
+  As the Casual Line moves, this value stays the same because new Casuals meet the criteria.
+  """
+  maxPlaceInLine: BigInt!
+
+  "Minimum number of Casuals required to perform a Fill."
+  minFillAmount: BigInt!
+
+  ######################## Pricing ########################
+
+  """
+  The Pricing Type states whether this CasualOrder uses FIXED or DYNAMIC pricing.
+
+  null = V1 FIXED  = use `pricePerCasual`
+  0    = V2 FIXED  = use `pricePerCasual`
+  1    = V2 DYNAMIC = use `pricingFunction`
+  """
+  pricingType: Int
+
+  """
+  [V1] The FIXED price per Casual denominated in Hooligans.
+
+  Ex. `pricePerCasual = 10000` indicates a price of 0.01 Hooligans per Casual.
+
+  If `pricingType = 1`, this field is initialized to `0` and should be ignored.
+  """
+  pricePerCasual: Int!
+
+  """
+  [V2] The FIXED or DYNAMIC pricing function, encoded as bytes.
+
+  This must be decoded client-side, see `LibPolynomial.sol` for more info.
+
+  null    = V1 FIXED    = use `pricePerCasual`
+  "0x"    = V2 FIXED    = use `pricePerCasual`
+  "0x..." = V2 DYNAMIC  = use `pricingFunction`
+  """
+  pricingFunction: Bytes
+
+  ######################## Amounts ########################
+
+  """
+  The original number of Casuals requested by this CasualOrder.
+
+  Does NOT change as Fills occur.
+  Not deterministic for CasualOrders with pricingType = DYNAMIC.
+
+  If pricingType = FIXED:
+    Set to the number of Casuals which can be purchased by the Order.
+    If FIXED (V1): `amount` field emitted in CasualOrderCreated. 
+    If FIXED (V2): `amount / pricePerCasual` fields emitted in CasualOrderCreated.
+
+  If pricingType = DYNAMIC:
+    Set to `0`. The number of Casuals that will be provided is unknown, since
+    the price is calculated based on the place in line of supplied Casuals.
+  """
+  casualAmount: BigInt!
+
+  """
+  The current number of Casuals that have been purchased by this CasualOrder.
+
+  Increases during each subsequent Fill.
+  If pricingType = FIXED: `0 <= casualAmountFilled <= casualAmount`
+  If pricingType = DYNAMIC: No constraint, since `casualAmount` is unknown.
+
+  Upon CasualOrder cancellation, this value is locked.
+  """
+  casualAmountFilled: BigInt!
+
+  """
+  The original number of Hooligans locked in the CasualOrder.
+
+  Does NOT change as Fills occur.
+  Always deterministic, since the Guvnor must lock Hooligans for CasualOrder fulfillment.
+
+  If FIXED (V1): `amount * pricePerCasual` fields emitted in CasualOrderCreated.
+  If FIXED (V2): `amount` field emitted in CasualOrderCreated.
+  If DYNAMIC (V2): `amount` field emitted in CasualOrderCreated.
+  """
+  hooliganAmount: BigInt!
+
+  """
+  The current number of Hooligans spent to acquire Casuals.
+  
+  Increases during each subsequent Fill:
+  `0 <= hooliganAmountFilled <= hooliganAmount`
+
+  Upon CasualOrder cancellation, this value is locked.
+  """
+  hooliganAmountFilled: BigInt!
+
+  ######################## Activity ########################
+
+  "All Fills associated with this CasualOrder."
+  fills: [CasualFill!]!
+
+  ######################## Metadata ########################
+
+  "Current status of order."
+  status: MarketStatus!
+
+  "Timestamp of CasualOrder creation."
+  createdAt: BigInt!
+
+  "Timestamp of last CasualOrder update. Changes when a CasualOrder is Filled or Cancelled."
+  updatedAt: BigInt!
+
+  "Transaction hash when this CasualOrder entity was created."
+  creationHash: String!
+}
+
+type CasualFill @entity {
+  "Hooliganhorde address - Order/Listing index - transaction hash"
+  id: ID!
+  "Marketplace associated with this fill"
+  casualMarketplace: CasualMarketplace!
+  "Creation timestamp"
+  createdAt: BigInt!
+  "Associated listing, if any"
+  listing: CasualListing
+  "Associated order, if any"
+  order: CasualOrder
+  "Account fulfilling the order"
+  from: String!      # These are already referenced via the listing and order entities.
+  "Account filling the order"
+  to: Guvnor!
+  "Number of casuals filled"
+  amount: BigInt!
+  "Index of turf transferred"
+  index: BigInt!
+  "Start of turf transferred"
+  start: BigInt!
+  "Total hooligans used to fill listing/order"
+  costInHooligans: BigInt 
+}
+
+##################################
+##### Percoceter Entities #####
+##################################
+
+# Global Percoceter state for tracking
+type Percoceter @entity {
+  "Token address for perc"
+  id: ID!
+  "Total overall suppy of perc tokens"
+  supply: BigInt!
+  tokens: [PercoceterToken!]! @derivedFrom(field: "percoceter")
+}
+
+# Id-level Percoceter entity
+type PercoceterToken @entity {
+  "Total BPF for purchase"
+  id: ID!
+  percoceter: Percoceter!
+  "Total supply for this Culture"
+  supply: BigInt!
+  "Culture paid for this ID"
+  culture: BigDecimal!
+  "Ending BPF on creation"
+  endBpf: BigInt!
+  "Starting BPF on creation"
+  startBpf: BigInt!
+  "Conflict created"
+  conflict: Int!
+  balances: [PercoceterBalance!]! @derivedFrom(field: "percoceterToken")
+}
+
+type PercoceterBalance @entity {
+  "Percoceter Token - Guvnor address"
+  id: ID!
+  percoceterToken: PercoceterToken!
+  guvnor: Guvnor!
+  "Current balance of token"
+  amount: BigInt!
+}
+
+type PercoceterYield @entity {
+  "Conflict of data points"
+  id: ID!
+  "Current conflict"
+  conflict: Int!
+  "Current culture"
+  culture: BigDecimal!
+  "Current outstanding perc"
+  outstandingPerc: BigInt!
+  "Current Hooligan EMA"
+  hooligansPerConflictEMA: BigDecimal!
+  "BPF delta"
+  deltaBpf: BigDecimal!
+  "Simplified APY for new Perc"
+  simpleAPY: BigDecimal!
+  "Block timestamp at creation"
+  createdAt: BigInt!
+}
+
+##################################
+##### Event-Level Data #####
+##################################
+
+### We need to add these in
+
+"""
+An event is any user action that occurs in a protocol. Generally, they are Ethereum events
+emitted by a function in the smart contracts, stored in transaction receipts as event logs.
+However, some user actions of interest are function calls that don't emit events. For example,
+the deposit and withdraw functions in Yearn do not emit any events. In our subgraphs, we still
+store them as events, although they are not technically Ethereum events emitted by smart
+contracts.
+"""
+
+interface FirmEvent {
+  " { Event type }-{ Transaction hash }-{ Log index } "
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+interface FieldEvent {
+  " { Event type }-{ Transaction hash }-{ Log index } "
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+interface MarketplaceEvent {
+  " { Event type }-{ Transaction hash }-{ Log index } "
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type CasualTransfer implements FieldEvent @entity(immutable: true) {
+  " casualtransfer-{ Transaction hash }-{ Log index } "
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Address that received the casuals "
+  to: String!
+  " Address that sent the casuals "
+  from: String!
+  " Index of the casuals sent"
+  index: BigInt!
+  " Total casuals being sent"
+  casuals: BigInt!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type Draft implements FieldEvent @entity(immutable: true) {
+  "draft-{ Transaction hash }-{ Log index } "
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Address drafting hooligans "
+  guvnor: String!
+  " Turfs being drafted "
+  turfs: [BigInt!]!
+  " Total hooligans drafted "
+  hooligans: BigInt!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+  
+}
+
+type Chop implements FirmEvent @entity(immutable: true){
+  "chop-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Address chopping "
+  guvnor: String!
+  " Unripe token being chopped "
+  unripe: String!
+  " Amount being chopped"
+  amount: BigInt!
+  " Underlying token "
+  underlying: String!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type Incentive implements FirmEvent @entity(immutable: true) {
+  "incentive-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Address incentivized "
+  caller: String!
+  " Amount minted as incentive"
+  amount: BigInt!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type Reward implements FirmEvent @entity(immutable: true) {
+  "reward-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Conflict of reward "
+  conflict: Int!
+  " Amount minted to casual line"
+  toField: BigInt!
+  " Amount minted to firm"
+  toFirm: BigInt!
+  " Amount minted to percoceter"
+  toPercoceter: BigInt!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type MetapoolOracle implements FirmEvent @entity(immutable: true) {
+  "metapoolOracle-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Conflict of oracle "
+  conflict: Int!
+  " DeltaB for conflict"
+  deltaB: BigInt!
+  " Cumulative balance A"
+  balanceA: BigInt!
+  " Cumulative balance B"
+  balanceB: BigInt!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type AddDeposit implements FirmEvent @entity(immutable: true) {
+  "addDeposit-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Account removing deposit"
+  account: String!
+  " Token removed"
+  token: String!
+  " Conflict of deposit removed "
+  conflict: Int!
+  " Amount of token removed "
+  amount: BigInt!
+  " BDV of the deposit "
+  bdv: BigInt!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type RemoveDeposit implements FirmEvent @entity(immutable: true) {
+  "removeDeposit-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Account removing deposit"
+  account: String!
+  " Token removed"
+  token: String!
+  " Conflict of deposit removed "
+  conflict: Int!
+  " Amount of token removed "
+  amount: BigInt!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type HordeChange implements FirmEvent @entity(immutable: true) {
+  "hordeChange-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Account removing deposit"
+  account: String!
+  " Token removed"
+  delta: BigInt!
+  " Conflict when the change happened "
+  conflict: Int!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type ProspectChange implements FirmEvent @entity(immutable: true) {
+  "prospectChange-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Account removing deposit"
+  account: String!
+  " Token removed"
+  delta: BigInt!
+  " Conflict when the change happened "
+  conflict: Int!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type CasualListingCreated implements MarketplaceEvent @entity(immutable: true) {
+  "casualListingCreated-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Historical ID for joins"
+  historyID: String!
+  " Account creating the listing"
+  account: String!
+  " Index of the turf listed"
+  index: BigInt!
+  " Start value of the turf listed "
+  start: BigInt!
+  "Amount of casuals listed"
+  amount: BigInt!
+  "Price per casual"
+  pricePerCasual: Int!
+  "Max index for listing"
+  maxDraftableIndex: BigInt!
+  "Minimum fill amount"
+  minFillAmount: BigInt!
+  "Claim to location"
+  mode: Int!
+  "Pricing Function Data"
+  pricingFunction: Bytes
+  "Pricing Type"
+  pricingType: Int
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type CasualListingFilled implements MarketplaceEvent @entity(immutable: true) {
+  "casualListingFilled-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Historical ID for joins"
+  historyID: String!
+  "Account selling casuals"
+  from: String!
+  "Account buying casuals"
+  to: String!
+  "Index of the turf transferred"
+  index: BigInt!
+  "Start of the turf transferred"
+  start: BigInt!
+  "Number of casuals transferred"
+  amount: BigInt!
+  "Hooligans paid to fill the listing"
+  costInHooligans: BigInt
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type CasualListingCancelled implements MarketplaceEvent @entity(immutable: true) {
+  "prospectChange-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Historical ID for joins"
+  historyID: String!
+  " Account cancelling listing"
+  account: String!
+  " Index of turf listing being cancelled"
+  index: BigInt!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type CasualOrderCreated implements MarketplaceEvent @entity(immutable: true) {
+  "casualOrderCreated-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Historical ID for joins"
+  historyID: String!
+  " Account creating the listing"
+  account: String!
+  " ID of the casual order"
+  orderId: String!
+  "Amount of casuals listed"
+  amount: BigInt!
+  "Price per casual"
+  pricePerCasual: Int!
+  "Max place in line"
+  maxPlaceInLine: BigInt!
+  "Pricing Function Data"
+  pricingFunction: Bytes
+  "Pricing Type"
+  pricingType: Int
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type CasualOrderFilled implements MarketplaceEvent @entity(immutable: true) {
+  "casualOrderFilled-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Historical ID for joins"
+  historyID: String!
+  "Account selling casuals"
+  from: String!
+  "Account buying casuals"
+  to: String!
+  "Index of the turf transferred"
+  index: BigInt!
+  "Start of the turf transferred"
+  start: BigInt!
+  "Number of casuals transferred"
+  amount: BigInt!
+  "Hooligans paid to fill the order"
+  costInHooligans: BigInt
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type CasualOrderCancelled implements MarketplaceEvent @entity(immutable: true) {
+  "casualOrderCancelled-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  " Historical ID for joins"
+  historyID: String!
+  " Account cancelling listing"
+  account: String!
+  " ID of order cancelled"
+  orderId: String!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type WhitelistToken implements FirmEvent @entity(immutable: true) {
+  "whitelistToken-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  "Token address whitelisted"
+  token: String!
+  "Horde per BDV"
+  horde: BigInt!
+  "Prospects per BDV"
+  prospects: BigInt!
+  "Selector for token"
+  selector: String!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}
+
+type DewhitelistToken implements FirmEvent @entity(immutable: true) {
+  "dewhitelistToken-{ Transaction hash }-{ Log index }"
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+  " The protocol this transaction belongs to "
+  protocol: Hooliganhorde!
+  "Token address dewhitelisted"
+  token: String!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  createdAt: BigInt!
+}

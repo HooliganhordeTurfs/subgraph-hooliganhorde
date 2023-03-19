@@ -1,0 +1,5938 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "mockToBDV",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "name": "HooliganAllocation",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32[]",
+        "name": "withdrawals",
+        "type": "uint32[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "name": "HooliganClaim",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "ethereum",
+        "type": "uint256"
+      }
+    ],
+    "name": "EtherClaim",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "turfs",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "name": "Draft",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32[]",
+        "name": "withdrawals",
+        "type": "uint32[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lp",
+        "type": "uint256"
+      }
+    ],
+    "name": "LPClaim",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "c",
+        "type": "tuple"
+      }
+    ],
+    "name": "claim",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "hooligansClaimed",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "c",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "claimAndUnwrapHooligans",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "hooligansClaimed",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32[]",
+        "name": "withdrawals",
+        "type": "uint32[]"
+      }
+    ],
+    "name": "claimHooligans",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "claimEth",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32[]",
+        "name": "withdrawals",
+        "type": "uint32[]"
+      }
+    ],
+    "name": "claimLP",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "turfs",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "draft",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32[]",
+        "name": "withdrawals",
+        "type": "uint32[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minHooliganAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minEthAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "removeAndClaimLP",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "unwrapHooligans",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "hooligansToWallet",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "wrapHooligans",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "wrappedHooligans",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32[]",
+        "name": "crates",
+        "type": "uint32[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "crateHooligans",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "name": "HooliganRemove",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "conflict",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "prospects",
+        "type": "uint256"
+      }
+    ],
+    "name": "LPDeposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32[]",
+        "name": "crates",
+        "type": "uint32[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "crateLP",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lp",
+        "type": "uint256"
+      }
+    ],
+    "name": "LPRemove",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "hooligansToPeg",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "lp",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "hooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct LibMarket.AddLiquidity",
+        "name": "al",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint32[]",
+        "name": "crates",
+        "type": "uint32[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimConvertAddAndDepositLP",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "lp",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "hooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct LibMarket.AddLiquidity",
+        "name": "al",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint32[]",
+        "name": "crates",
+        "type": "uint32[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "convertAddAndDepositLP",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minLP",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32[]",
+        "name": "crates",
+        "type": "uint32[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "convertDepositedHooligans",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "lp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minHooligans",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32[]",
+        "name": "crates",
+        "type": "uint32[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "convertDepositedLP",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lpToPeg",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "lp",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "curveToBDV",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "facetAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "enum IDiamondCut.FacetCutAction",
+            "name": "action",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes4[]",
+            "name": "functionSelectors",
+            "type": "bytes4[]"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct IDiamondCut.FacetCut[]",
+        "name": "_diamondCut",
+        "type": "tuple[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_init",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "_calldata",
+        "type": "bytes"
+      }
+    ],
+    "name": "DiamondCut",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "facetAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "enum IDiamondCut.FacetCutAction",
+            "name": "action",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes4[]",
+            "name": "functionSelectors",
+            "type": "bytes4[]"
+          }
+        ],
+        "internalType": "struct IDiamondCut.FacetCut[]",
+        "name": "_diamondCut",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "address",
+        "name": "_init",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_calldata",
+        "type": "bytes"
+      }
+    ],
+    "name": "diamondCut",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes4",
+        "name": "_functionSelector",
+        "type": "bytes4"
+      }
+    ],
+    "name": "facetAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "facetAddress_",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "facetAddresses",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "facetAddresses_",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_facet",
+        "type": "address"
+      }
+    ],
+    "name": "facetFunctionSelectors",
+    "outputs": [
+      {
+        "internalType": "bytes4[]",
+        "name": "facetFunctionSelectors_",
+        "type": "bytes4[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "facets",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "facetAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes4[]",
+            "name": "functionSelectors",
+            "type": "bytes4[]"
+          }
+        ],
+        "internalType": "struct IDiamondLoupe.Facet[]",
+        "name": "facets_",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes4",
+        "name": "_interfaceId",
+        "type": "bytes4"
+      }
+    ],
+    "name": "supportsInterface",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "casuals",
+        "type": "uint256"
+      }
+    ],
+    "name": "Homegrow",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyAndHomegrowHooligans",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "casuals",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyAndHomegrowHooligansWithMin",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "casuals",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimAndHomegrowHooligans",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "casuals",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minAmount",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimAndHomegrowHooligansWithMin",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "casuals",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyAmount",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimBuyAndHomegrowHooligans",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "casuals",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minAmount",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimBuyAndHomegrowHooligansWithMin",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "casuals",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "draftableIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "draftedIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "turfId",
+        "type": "uint256"
+      }
+    ],
+    "name": "turf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "casualIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "homegrowHooligans",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "homegrowHooligansWithMin",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalDraftable",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalCasuals",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalRage",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalUnripenedCasuals",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
+      }
+    ],
+    "name": "CompleteFundraiser",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "fundraiser",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "CreateFundraiser",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "FundFundraiser",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "casuals",
+        "type": "uint256"
+      }
+    ],
+    "name": "Homegrow",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "payee",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "createFundraiser",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "fund",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
+      }
+    ],
+    "name": "fundingToken",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
+      }
+    ],
+    "name": "fundraiser",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "payee",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "total",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "remaining",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "start",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Storage.Fundraiser",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "numberOfFundraisers",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
+      }
+    ],
+    "name": "remainingFunding",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
+      }
+    ],
+    "name": "totalFunding",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "bip",
+        "type": "uint32"
+      }
+    ],
+    "name": "Commit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "name": "Incentivization",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "Pause",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "bip",
+        "type": "uint32"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "period",
+        "type": "uint256"
+      }
+    ],
+    "name": "Proposal",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timePassed",
+        "type": "uint256"
+      }
+    ],
+    "name": "Unpause",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "bip",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "roots",
+        "type": "uint256"
+      }
+    ],
+    "name": "Unvote",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "bip",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "roots",
+        "type": "uint256"
+      }
+    ],
+    "name": "Vote",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32[]",
+        "name": "bips",
+        "type": "uint32[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool[]",
+        "name": "votes",
+        "type": "bool[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "roots",
+        "type": "uint256"
+      }
+    ],
+    "name": "VoteList",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "activeBips",
+    "outputs": [
+      {
+        "internalType": "uint32[]",
+        "name": "",
+        "type": "uint32[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "bipId",
+        "type": "uint32"
+      }
+    ],
+    "name": "bip",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "proposer",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "start",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "period",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "executed",
+            "type": "bool"
+          },
+          {
+            "internalType": "int256",
+            "name": "pauseOrUnpause",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint128",
+            "name": "timestamp",
+            "type": "uint128"
+          },
+          {
+            "internalType": "uint256",
+            "name": "roots",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "endTotalRoots",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Storage.Bip",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "bipId",
+        "type": "uint32"
+      }
+    ],
+    "name": "bipDiamondCut",
+    "outputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "facetAddress",
+                "type": "address"
+              },
+              {
+                "internalType": "enum IDiamondCut.FacetCutAction",
+                "name": "action",
+                "type": "uint8"
+              },
+              {
+                "internalType": "bytes4[]",
+                "name": "functionSelectors",
+                "type": "bytes4[]"
+              }
+            ],
+            "internalType": "struct IDiamondCut.FacetCut[]",
+            "name": "diamondCut",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "address",
+            "name": "initAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes",
+            "name": "initData",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct Storage.DiamondCut",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "bipId",
+        "type": "uint32"
+      }
+    ],
+    "name": "bipFacetCuts",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "facetAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "enum IDiamondCut.FacetCutAction",
+            "name": "action",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes4[]",
+            "name": "functionSelectors",
+            "type": "bytes4[]"
+          }
+        ],
+        "internalType": "struct IDiamondCut.FacetCut[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "bip",
+        "type": "uint32"
+      }
+    ],
+    "name": "commit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "bip",
+        "type": "uint32"
+      }
+    ],
+    "name": "emergencyCommit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "numberOfBips",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ownerPause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ownerUnpause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "bip",
+        "type": "uint32"
+      }
+    ],
+    "name": "pauseOrUnpause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "facetAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "enum IDiamondCut.FacetCutAction",
+            "name": "action",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes4[]",
+            "name": "functionSelectors",
+            "type": "bytes4[]"
+          }
+        ],
+        "internalType": "struct IDiamondCut.FacetCut[]",
+        "name": "_diamondCut",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "address",
+        "name": "_init",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_calldata",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_pauseOrUnpause",
+        "type": "uint8"
+      }
+    ],
+    "name": "propose",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "bipId",
+        "type": "uint32"
+      }
+    ],
+    "name": "rootsFor",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "bip",
+        "type": "uint32"
+      }
+    ],
+    "name": "unvote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32[]",
+        "name": "bip_list",
+        "type": "uint32[]"
+      }
+    ],
+    "name": "unvoteAll",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "bip",
+        "type": "uint32"
+      }
+    ],
+    "name": "vote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32[]",
+        "name": "bip_list",
+        "type": "uint32[]"
+      }
+    ],
+    "name": "voteAll",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32[]",
+        "name": "bip_list",
+        "type": "uint32[]"
+      }
+    ],
+    "name": "voteUnvoteAll",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32",
+        "name": "bipId",
+        "type": "uint32"
+      }
+    ],
+    "name": "voted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "casuals",
+        "type": "uint256"
+      }
+    ],
+    "name": "TurfTransfer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "casuals",
+        "type": "uint256"
+      }
+    ],
+    "name": "CasualApproval",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "CasualListingCancelled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint24",
+        "name": "pricePerCasual",
+        "type": "uint24"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxDraftableIndex",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "toWallet",
+        "type": "bool"
+      }
+    ],
+    "name": "CasualListingCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "CasualListingFilled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      }
+    ],
+    "name": "CasualOrderCancelled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint24",
+        "name": "pricePerCasual",
+        "type": "uint24"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxPlaceInLine",
+        "type": "uint256"
+      }
+    ],
+    "name": "CasualOrderCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "CasualOrderFilled",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      }
+    ],
+    "name": "allowanceCasuals",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "approveCasuals",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "hooliganAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyHooliganAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint24",
+        "name": "pricePerCasual",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint232",
+        "name": "maxPlaceInLine",
+        "type": "uint232"
+      }
+    ],
+    "name": "buyHooligansAndCreateCasualOrder",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "start",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint24",
+            "name": "pricePerCasual",
+            "type": "uint24"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxDraftableIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Listing.CasualListing",
+        "name": "l",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "hooliganAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyHooliganAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyHooligansAndFillCasualListing",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "cancelCasualListing",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint24",
+        "name": "pricePerCasual",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxPlaceInLine",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "toWallet",
+        "type": "bool"
+      }
+    ],
+    "name": "cancelCasualOrder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "hooliganAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint24",
+        "name": "pricePerCasual",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint232",
+        "name": "maxPlaceInLine",
+        "type": "uint232"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimAndCreateCasualOrder",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "start",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint24",
+            "name": "pricePerCasual",
+            "type": "uint24"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxDraftableIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Listing.CasualListing",
+        "name": "l",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "hooliganAmount",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimAndFillCasualListing",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "hooliganAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyHooliganAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint24",
+        "name": "pricePerCasual",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint232",
+        "name": "maxPlaceInLine",
+        "type": "uint232"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimBuyHooligansAndCreateCasualOrder",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "start",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint24",
+            "name": "pricePerCasual",
+            "type": "uint24"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxDraftableIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Listing.CasualListing",
+        "name": "l",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "hooliganAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyHooliganAmount",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimBuyHooligansAndFillCasualListing",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint24",
+        "name": "pricePerCasual",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxDraftableIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "toWallet",
+        "type": "bool"
+      }
+    ],
+    "name": "createCasualListing",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "hooliganAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint24",
+        "name": "pricePerCasual",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxPlaceInLine",
+        "type": "uint256"
+      }
+    ],
+    "name": "createCasualOrder",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "start",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint24",
+            "name": "pricePerCasual",
+            "type": "uint24"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxDraftableIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Listing.CasualListing",
+        "name": "l",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "hooliganAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "fillCasualListing",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "uint24",
+            "name": "pricePerCasual",
+            "type": "uint24"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxPlaceInLine",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Order.CasualOrder",
+        "name": "o",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "toWallet",
+        "type": "bool"
+      }
+    ],
+    "name": "fillCasualOrder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "casualListing",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint24",
+        "name": "pricePerCasual",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxPlaceInLine",
+        "type": "uint256"
+      }
+    ],
+    "name": "casualOrder",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      }
+    ],
+    "name": "casualOrderById",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "end",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferTurf",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "capture",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Decimal.D256",
+        "name": "",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Decimal.D256",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTWAPPrices",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "owner_",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "name": "Incentivization",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "conflict",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eth",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "draftable",
+        "type": "uint256"
+      }
+    ],
+    "name": "ConflictOfPlenty",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "conflict",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "supply",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "horde",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "prospects",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "casualIndex",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "draftableIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "ConflictSnapshot",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "conflict",
+        "type": "uint256"
+      }
+    ],
+    "name": "Actuation",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "conflict",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "newRage",
+        "type": "int256"
+      }
+    ],
+    "name": "SupplyDecrease",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "conflict",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newDraftable",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newFirm",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "newRage",
+        "type": "int256"
+      }
+    ],
+    "name": "SupplyIncrease",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "conflict",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "newRage",
+        "type": "int256"
+      }
+    ],
+    "name": "SupplyNeutral",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "conflict",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "caseId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int8",
+        "name": "change",
+        "type": "int8"
+      }
+    ],
+    "name": "WeatherChange",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "hooligan",
+    "outputs": [
+      {
+        "internalType": "contract IHooligan",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lockedReserves",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pair",
+    "outputs": [
+      {
+        "internalType": "contract IUniswapV2Pair",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "paused",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pegPair",
+    "outputs": [
+      {
+        "internalType": "contract IUniswapV2Pair",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pegReserves",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "rain",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint32",
+            "name": "start",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "raining",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "casuals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "roots",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Storage.Rain",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "reserves",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "conflict",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "_s",
+        "type": "uint32"
+      }
+    ],
+    "name": "conflictOfPlenty",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "conflictTime",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "actuation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "time",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint32",
+            "name": "current",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "sis",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint8",
+            "name": "withdrawConflicts",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "start",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "period",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Storage.Conflict",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "weather",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "startRage",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastDRage",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint96",
+            "name": "lastRagePercent",
+            "type": "uint96"
+          },
+          {
+            "internalType": "uint32",
+            "name": "lastHomegrowTime",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "nextHomegrowTime",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "weatherYield",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "didHomegrowBelowMin",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "didHomegrowFaster",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Storage.Weather",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawConflicts",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "yield",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "name": "HooliganAllocation",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "conflict",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "name": "HooliganDeposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32[]",
+        "name": "crates",
+        "type": "uint32[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "crateHooligans",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "name": "HooliganRemove",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "conflict",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "name": "HooliganWithdraw",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "conflict",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "prospects",
+        "type": "uint256"
+      }
+    ],
+    "name": "LPDeposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32[]",
+        "name": "crates",
+        "type": "uint32[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "crateLP",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lp",
+        "type": "uint256"
+      }
+    ],
+    "name": "LPRemove",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "conflict",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lp",
+        "type": "uint256"
+      }
+    ],
+    "name": "LPWithdraw",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "lp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyHooliganAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyEthAmount",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "hooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct LibMarket.AddLiquidity",
+        "name": "al",
+        "type": "tuple"
+      }
+    ],
+    "name": "addAndDepositLP",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOfEth",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOfFarmableHooligans",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOfFarmableHooligansV1",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "roots",
+        "type": "uint256"
+      }
+    ],
+    "name": "balanceOfFarmableHooligansV2",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "accountHorde",
+        "type": "uint256"
+      }
+    ],
+    "name": "balanceOfFarmableHooligansV3",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOfFarmableProspects",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOfFarmableHorde",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOfGrownHorde",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOfPlentyBase",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOfRainRoots",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOfRoots",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOfProspects",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOfHorde",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOfUnclaimedRoots",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "uRoots",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
+      }
+    ],
+    "name": "hooliganDeposit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32",
+        "name": "i",
+        "type": "uint32"
+      }
+    ],
+    "name": "hooliganWithdrawal",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyAndDepositHooligans",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "lp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyHooliganAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyEthAmount",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "hooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct LibMarket.AddLiquidity",
+        "name": "al",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimAddAndDepositLP",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimAndDepositHooligans",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimAndDepositLP",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32[]",
+        "name": "crates",
+        "type": "uint32[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimAndWithdrawHooligans",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32[]",
+        "name": "crates",
+        "type": "uint32[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimAndWithdrawLP",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "buyAmount",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32[]",
+            "name": "hooliganWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "lpWithdrawals",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "turfs",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimEth",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "convertLP",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minHooliganAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minEthAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "toWallet",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct LibClaim.Claim",
+        "name": "claim",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimBuyAndDepositHooligans",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositHooligans",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositLP",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lastConflictOfPlenty",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "lastSupplyIncreases",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "lastUpdate",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "legacySupplyIncrease",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "hooligans",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "horde",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "roots",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Storage.V1IncreaseFirm",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
+      }
+    ],
+    "name": "lpDeposit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32",
+        "name": "i",
+        "type": "uint32"
+      }
+    ],
+    "name": "lpWithdrawal",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "proposedUntil",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "conflictsOfPlenty",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "weth",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "base",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint32",
+            "name": "last",
+            "type": "uint32"
+          }
+        ],
+        "internalType": "struct Storage.ConflictOfPlenty",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "supplyIncreases",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalDepositedHooligans",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalDepositedLP",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalFarmableHooligans",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalRoots",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalProspects",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalHorde",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalWithdrawnHooligans",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalWithdrawnLP",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "unclaimedRoots",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "updateFirm",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "voted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "votedUntil",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "weth",
+    "outputs": [
+      {
+        "internalType": "contract IWETH",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32[]",
+        "name": "crates",
+        "type": "uint32[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "withdrawHooligans",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32[]",
+        "name": "crates",
+        "type": "uint32[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "withdrawLP",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "hooligans",
+        "type": "uint256"
+      }
+    ],
+    "name": "HooliganAllocation",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "conflict",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "ClaimConflict",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32[]",
+        "name": "conflicts",
+        "type": "uint32[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "ClaimConflicts",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "conflict",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "bdv",
+        "type": "uint256"
+      }
+    ],
+    "name": "Deposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "conflict",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "RemoveConflict",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32[]",
+        "name": "conflicts",
+        "type": "uint32[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "RemoveConflicts",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "conflict",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Withdraw",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32",
+        "name": "conflict",
+        "type": "uint32"
+      }
+    ],
+    "name": "claimTokenByConflict",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32[]",
+        "name": "conflicts",
+        "type": "uint32[]"
+      }
+    ],
+    "name": "claimTokenByConflicts",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "conflict",
+            "type": "uint32"
+          }
+        ],
+        "internalType": "struct FirmV2Facet.ConflictClaim[]",
+        "name": "claims",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "claimTokensByConflict",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "conflicts",
+            "type": "uint32[]"
+          }
+        ],
+        "internalType": "struct FirmV2Facet.ConflictsClaim[]",
+        "name": "claims",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "claimTokensByConflicts",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "deposit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32",
+        "name": "conflict",
+        "type": "uint32"
+      }
+    ],
+    "name": "getDeposit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "getTotalDeposited",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "getTotalWithdrawn",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32",
+        "name": "conflict",
+        "type": "uint32"
+      }
+    ],
+    "name": "getWithdrawal",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "tokenSettings",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes4",
+            "name": "selector",
+            "type": "bytes4"
+          },
+          {
+            "internalType": "uint32",
+            "name": "prospects",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "horde",
+            "type": "uint32"
+          }
+        ],
+        "internalType": "struct Storage.FirmSettings",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes4",
+        "name": "selector",
+        "type": "bytes4"
+      },
+      {
+        "internalType": "uint32",
+        "name": "horde",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "prospects",
+        "type": "uint32"
+      }
+    ],
+    "name": "whitelistToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32",
+        "name": "conflict",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawTokenByConflict",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32[]",
+        "name": "conflicts",
+        "type": "uint32[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "withdrawTokenByConflicts",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "conflict",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FirmV2Facet.WithdrawConflict[]",
+        "name": "withdraws",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "withdrawTokensByConflict",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "conflicts",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "amounts",
+            "type": "uint256[]"
+          }
+        ],
+        "internalType": "struct FirmV2Facet.WithdrawConflicts[]",
+        "name": "withdraws",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "withdrawTokensByConflicts",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
